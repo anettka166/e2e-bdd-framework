@@ -22,7 +22,7 @@ public class UserAccountPage extends HomePage{
     @FindBy(xpath = "//h1[@class='page-heading']")
     private WebElement myAccntHeader;
 
-    @FindBy(xpath = "//div[contains(@class,'addresses-lists')]//ul/li//span")
+    @FindBy(xpath = "//ul[@class='myaccount-link-list']/li/a/span")
     private List<WebElement> accountOptions;
 
     @FindBy(className = "info-account")
@@ -39,8 +39,8 @@ public class UserAccountPage extends HomePage{
    public void verifyAccountOptions(){
         assertEquals(5, accountOptions.size());
         for (int i = 0; i < accountOptions.size(); i++) {
-            assertEquals(accountOptions.get(i).getText().toLowerCase(), accountOptionsExpected[i],
-                    "account option did not match " + accountOptionsExpected[i]);
+            assertEquals( "account options did not match ", accountOptionsExpected[i],
+                    accountOptions.get(i).getText().toLowerCase());
         }
     }
 

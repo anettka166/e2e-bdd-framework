@@ -48,7 +48,8 @@ public class HomePage extends BasePage{
 
     public void clickSingInLink() {
         assertTrue("Sign in link was not displayed", signInLink.isEnabled()) ;
-        signInLink.click();
+        actions.click(signInLink).perform();
+ //       signInLink.click();
         wait.until(ExpectedConditions.titleIs("Login - My Store"));
     }
 
