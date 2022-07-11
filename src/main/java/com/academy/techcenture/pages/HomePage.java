@@ -1,5 +1,7 @@
 package com.academy.techcenture.pages;
 
+import com.academy.techcenture.config.ConfigReader;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -40,10 +42,12 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//div[@class='ac_results']//li[1]")
     protected WebElement dropdownFirstItem;
 
-    public void clickSingInLink() throws InterruptedException {
+    @FindBy(xpath = "//img[contains(@class,'logo')]")
+    private WebElement logo;
+
+
+    public void clickSingInLink() {
         assertTrue("Sign in link was not displayed", signInLink.isEnabled()) ;
-        Thread.sleep(3000);
-        wait.until(ExpectedConditions.elementToBeClickable(signInLink));
         signInLink.click();
         wait.until(ExpectedConditions.titleIs("Login - My Store"));
     }
@@ -65,6 +69,13 @@ public class HomePage extends BasePage{
         searchInputBox.sendKeys(product);
         wait.until(ExpectedConditions.visibilityOf(dropdownFirstItem));
         dropdownFirstItem.click();
+    }
+
+    public void navigateToHomePage(){
+        driver.get(ConfigReader.getProperty("URL"));
+        assertEquals("Titles do not match", "My Store", driver.getTitle());
+
+        assertTrue("Logo is not displayed", logo.isDisplayed());
     }
 
 

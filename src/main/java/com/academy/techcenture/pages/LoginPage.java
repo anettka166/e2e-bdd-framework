@@ -1,6 +1,7 @@
 package com.academy.techcenture.pages;
 
 import com.academy.techcenture.config.ConfigReader;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import static org.junit.Assert.*;
@@ -55,27 +56,48 @@ public class LoginPage extends HomePage{
     @FindBy(id = "create_account_error")
     private WebElement invalidEmailErrorMsg;
 
-    public void login(){
+    @FindBy(id = "login_form")
+    private WebElement loginForm;
 
 
-        assertTrue( "Login Header was not displayed", loginHeaderTxt.isDisplayed());
+
+    public void enterUserName(){
         assertTrue("Email label was not dipslayed", emailLabel.isDisplayed());
-        assertTrue("Password label was not dipslayed", passwdLabel.isDisplayed());
         emailInput.clear();
         emailInput.sendKeys(ConfigReader.getProperty("username"));
+
+    }
+
+    public void enterPassword(){
+        assertTrue("Forgot passwd is not displayed", forgotPswdLink.isDisplayed());
+        assertTrue("Password label was not dipslayed", passwdLabel.isDisplayed());
         passwdInput.clear();
         passwdInput.sendKeys(ConfigReader.getProperty("password"));
-        assertTrue("Forgot passwd is not displayed", forgotPswdLink.isDisplayed());
-        assertTrue("Login Btn is not enabled", loginBtn.isEnabled());
-        assertEquals("sign in", loginBtn.getText().toLowerCase().trim());
-        loginBtn.click();
+
     }
+
+    public void clickOnLoginBtn(){
+        assertEquals("sign in", loginBtn.getText().toLowerCase().trim());
+        assertTrue("Login Btn is not enabled", loginBtn.isEnabled());
+        loginBtn.click();
+
+    }
+
     public void enterRandomEmail(){
 
         String randomEmail = commonUtils.randomEmail();
         createEmailInput.sendKeys(randomEmail);
         assertTrue(createAccountBtn.isEnabled());
         createAccountBtn.click();
+    }
+
+    public void verifyUserIsOnLoginPage(){
+
+        String loginTitle = driver.getTitle();
+        assertEquals("Titles are not matching", "Login - My Store", loginTitle);
+        assertTrue( "Login Header was not displayed", loginHeaderTxt.isDisplayed());
+        assertTrue("Login form is not displayed", loginForm.isDisplayed());
+
     }
 
 }
